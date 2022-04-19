@@ -6,4 +6,4 @@ Pi Network Node monitoring on web
     ./initial.sh
     
 # 运行监控脚本
-    ./pi.sh
+    ./pi-web.sh
