@@ -16,3 +16,4 @@ sudo apt install nmap
 wget http://launchpadlibrarian.net/464905902/txt2html_2.53-2_all.deb
 sudo apt install libgetopt-argvfile-perl libyaml-syck-perl
 sudo dpkg -i txt2html_2.53-2_all.deb
+
