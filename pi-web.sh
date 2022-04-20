@@ -119,6 +119,7 @@ do
         uptime -p >>$Web
 
         txt2html $Web --title "Pi Node infomation" --append_head header_css --body_deco ' class="home"' --outfile index.html -p 2
+        cp index.html index.htm
         let i-=1
         sleep 0.314
 done
