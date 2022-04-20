@@ -1,34 +1,6 @@
 <meta http-equiv="refresh" content="6">
     <style type="text/css">
     <!--
-    @import url("./web/style.css");
+    @import url("./style.css");
     -->
     </style>
-    <style type="text/css">
-        .home {
-            background: linear-gradient(0.2turn, #8C3590, #2C4982);
-            -webkit-background-size: cover;
-            -ms-background-size: cover;
-            -moz-background-size: cover;
-            /*background-size: cover;*/
-            position: relative;
-        }
-        body {
-                color: white;
-                font-family: monospace;
-        }
-        link {
-                display: none;
-        }
-        a:link, a:visited {
-
-                color: #fbb44a;
-                text-decoration: none;
-                font-weight: bold;
-        }
-        strong {
-                font-weight: bold;
-        }
-
-    </style>
-    
