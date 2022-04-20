@@ -9,13 +9,12 @@ function env_check(){
         docker="Docker-Desktop"
         l_nmap="nmap"
         l_dos2unix="dos2unix"
-        l_txt2html="txt2html"
+        l_txt2heml="txt2html"
         nginx="nginx"
         c_pi=`powershell.exe Get-Process "Pi*Network" |awk '/Pi/{print $8"-"$9}' |head -1`
         c_docker=`powershell.exe Get-Process "Docker*Desktop" |awk '/Docker/{print $8"-"$9}' |head -1`
         c_nmap=`dpkg -l |grep "nmap" |head -1 |awk '{print $2}'`
         c_dos2unix=`dpkg -l |grep "dos2unix" |head -1 |awk '{print $2}'`
-        c_txt2html=`dpkg -l |grep "txt2html" |head -1 |awk '{print $2}'`
         c_nginx=` docker ps |awk '/nginx/{print $2}'`
 
         echo -n "Docker Desktop:   "
@@ -55,7 +54,7 @@ function env_check(){
         fi
         sleep 1
         echo -n "Linux txt2html:   "
-        if [ "$c_txt2html" == "$l_txt2html" ];then
+        if [ "$c_dos2unix" == "$l_dos2unix" ];then
                 echo -e "\033[1;32m[ OK ]\033[0m"
                 echo "OK" >>check_env.log
         else
@@ -98,18 +97,20 @@ Web="web_information.txt"
 
 for ((i=0;i<1;i++))
 do
+        echo "System's IP Address:  $ip" >$Web
         powershell.exe Get-WmiObject -Class win32_OperatingSystem  FreePhysicalMemory |awk '/FreePhysicalMemory/{print $3}' >.memory_txt
         dos2unix .memory_txt &>/dev/null
         free_mem=`cat .memory_txt`
         F_M=`echo "scale=2;$free_mem/1024/1024" |bc`
-        echo "System_FreePhysicalMemory: ${F_M}GB" >$Web
+        echo "System_FreePhysicalMemory: ${F_M}GB" >>$Web
 
-        powershell.exe wmic cpu get loadpercentage |head -2 |tail -1 |awk '{print "System_CPU_LoadPercentage: "$1"%" }' >>$Web
+        powershell.exe wmic cpu get loadpercentage |head -2 |tail -1 |awk '{print "System_CPU_LoadPercentage: "$1"%\n" }' >>$Web
 
+
+        nmap -Pn -p 31400-31409 $ip |grep "PORT" -A11 >>$Web
+        echo "docker container stats pi-consensus" >> $Web
         docker container stats pi-consensus --no-stream >>$Web
-
-        echo "Server's IP Address:  $ip" >>$Web
-        nmap -Pn -p 31400-31409 $ip |grep "Host" -A12 >>$Web
+        echo "" >>$Web
 
 
         docker exec pi-consensus stellar-core http-command info |grep "default INFO] {" -A60 >>$Web
@@ -117,7 +118,7 @@ do
         date >>$Web
         uptime -p >>$Web
 
-        txt2html $Web --title "Pi Node infomation" --append_head header_css --body_deco ' class="home"' --outfile index.html
+        txt2html $Web --title "Pi Node infomation" --append_head header_css --body_deco ' class="home"' --outfile index.html -p 2
         let i-=1
         sleep 0.314
 done
