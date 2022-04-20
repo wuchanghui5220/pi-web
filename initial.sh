@@ -12,7 +12,7 @@ sudo apt install dos2unix
 # 安装端口扫描工具 nmap
 sudo apt install nmap
 
-# 安装文本转换 HTML 工具
+# 安装 text文本转换 HTML网页工具
 wget http://launchpadlibrarian.net/464905902/txt2html_2.53-2_all.deb
 sudo apt install libgetopt-argvfile-perl libyaml-syck-perl
 sudo dpkg -i txt2html_2.53-2_all.deb
